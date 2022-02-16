@@ -51,7 +51,7 @@ npm_root_g(function (err, data) {
 			ds.top.path === pkgPath &&
 			//.get(name [, itemPath])	//to get from cache
 			ds.get(item1.name) === item1 &&
-			//.isDirect(item)	//to check if an item is diretly under the top
+			//.isDirect(item)	//to check if an item is directly under the top
 			ds.isDirect(item1) === true &&
 			//.isTop(item)		//to check if an item is the top
 			ds.isTop(ds.top) === true &&
