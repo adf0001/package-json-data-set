@@ -1,6 +1,6 @@
 {
   "name": "package-json-data-set",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "data set tool for package.json",
   "main": "package-json-data-set.js",
   "scripts": {
@@ -14,7 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "package-json-version-tool": "^1.0.1",
-    "path-tool": "^1.0.2"
+    "path-tool": "^1.0.4"
   },
   "devDependencies": {
     "npm-root-g": "^1.0.1"

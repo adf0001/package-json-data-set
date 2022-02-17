@@ -29,8 +29,15 @@ var packageJsonDataSet = {
 	},
 
 	//to check if an item is the top
-	isTop: function (item) {
-		return item && item === this.top;
+	isTop: function (item, byString) {
+		if (!item || !this.top) return false;
+
+		if (item === this.top || (item.path === this.top.path && item.pkg === this.top.pkg)) return true;
+
+		if (!byString) return false;
+
+		return path_tool.samePath(item.path, this.top.path) &&
+			JSON.stringify(item.pkg) === JSON.stringify(this.top.pkg);
 	},
 
 	//to get from cache

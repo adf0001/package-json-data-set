@@ -48,9 +48,14 @@ module.exports = {
 					ds.get(item1.name) === item1 &&
 					//.isDirect(item)	//to check if an item is directly under the top
 					ds.isDirect(item1) === true &&
-					//.isTop(item)		//to check if an item is the top
+					//.isTop(item, byString)		//to check if an item is the top
 					ds.isTop(ds.top) === true &&
 					ds.isTop(item1) === false &&
+					ds.isTop({ path: pkgPath, pkg: pkgTop }) === true &&
+					ds.isTop({ path: pkgPath + "/", pkg: pkgTop }) === false &&
+					ds.isTop({ path: pkgPath + "/", pkg: pkgTop }, true) === true &&
+					ds.isTop({ path: pkgPath, pkg: JSON.parse(JSON.stringify(pkgTop)) }) === false &&
+					ds.isTop({ path: pkgPath, pkg: JSON.parse(JSON.stringify(pkgTop)) }, true) === true &&
 					true
 				));
 
