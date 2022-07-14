@@ -53,7 +53,7 @@ var packageJsonDataSet = {
 		var item = this.data[name];
 		if (item) {
 			if (versionRange == item.pkg.version || semver_satisfy(item.pkg.version, versionRange)) {
-				cb(null, item);
+				cb?.(null, item);
 				return;
 			}
 
@@ -62,7 +62,7 @@ var packageJsonDataSet = {
 			while (true) {
 				verItem = item.versionPkg[verPath + "/node_modules/" + name];
 				if (verItem && semver_satisfy(verItem.pkg.version, versionRange)) {
-					cb(null, verItem);
+					cb?.(null, verItem);
 					return;
 				}
 
@@ -76,7 +76,7 @@ var packageJsonDataSet = {
 		var _this = this;
 		this.loadPackageFunc(pathFrom, name,
 			function (err, data) {
-				if (err) { return; }
+				if (err) { cb?.(err, data); return; }
 				//console.log(data);
 
 				var srcItem = { name: name, path: data.path, pkg: data.pkg };
@@ -84,7 +84,7 @@ var packageJsonDataSet = {
 				if (_this.isDirect(srcItem)) {
 					srcItem.versionPkg = {};	//prepare versionPkg for main
 					_this.data[name] = srcItem;	//save data
-					cb(null, srcItem);
+					cb?.(null, srcItem);
 					return;
 				}
 
@@ -92,14 +92,14 @@ var packageJsonDataSet = {
 					//save to main versionPkg
 					item.versionPkg[path_tool.keyString(srcItem.path)] = srcItem;
 					srcItem.main = item;
-					cb(null, srcItem);
+					cb?.(null, srcItem);
 					return;
 				}
 
 				//load main from top
 				_this.loadPackageFunc(_this.top.path, name,
 					function (err, data) {
-						if (err) { return; }
+						if (err) { cb?.(err, data); return; }
 						//console.log(packagePath);
 
 						var mainItem = { name: name, path: data.path, pkg: data.pkg, versionPkg: {} };
@@ -108,7 +108,7 @@ var packageJsonDataSet = {
 
 						srcItem.main = mainItem;
 
-						cb(null, srcItem);
+						cb?.(null, srcItem);
 					}
 				);
 
